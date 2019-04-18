@@ -9,12 +9,12 @@ import fr.upem.captcha.images.dogs.Dog;
 import fr.upem.captcha.images.miscellaneous.Miscellaneous;
 
 public class Entry implements Database {
-	public List<Category> categories = new ArrayList<Category>();
+	public List<ImageCategory> categories = new ArrayList<ImageCategory>();
 	
 	public Entry() {
-		categories.add(new Category("Chat", new Cat()));
-		categories.add(new Category("Chien", new Dog()));
-		categories.add(new Category("Etrangeté", new Miscellaneous()));		
+		categories.add(new Cat());
+		categories.add(new Dog());
+		categories.add(new Miscellaneous());
 	}
 	
 	@Override
@@ -23,7 +23,7 @@ public class Entry implements Database {
 	}
 
 	@Override
-	public List<Category> categories() {
+	public List<ImageCategory> getCategories() {
 		return Collections.unmodifiableList(this.categories);
 	}
 	

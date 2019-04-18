@@ -1,6 +1,7 @@
 package fr.upem.captcha.ui;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -13,12 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 public class CaptchaFrame extends JFrame {
-	
+
 	private List<JLabel> images;
 	private String type;
 	private Runnable validation;
 	private JFrame frame;
-	
+
 	public CaptchaFrame(List<JLabel> images, String type, Runnable validation) throws HeadlessException {
 		super();
 		this.images = images;
@@ -40,7 +41,7 @@ public class CaptchaFrame extends JFrame {
 		frame.setVisible(true);
 		return frame;
 	}
-	
+
 	private void populateFrameWithImages() {
 		for (JLabel image : this.images) {
 			frame.add(image);
@@ -51,9 +52,14 @@ public class CaptchaFrame extends JFrame {
 		JButton okButton = createOkButton();
 		frame.add(okButton);		
 	}
-	
+
 	private void addImageTypeIndicator() {
-		frame.add(new JTextArea("Veuillez sélectionner les images qui contiennent : " + type));
+		JTextArea textArea = new JTextArea("Sélectionner les images qui contiennent ce type d'éléments: " + type);
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		Font font = new Font("Lato", Font.BOLD, 18);
+		textArea.setFont(font);
+		frame.add(textArea);
 	}
 
 	private JButton createOkButton(){
@@ -69,7 +75,7 @@ public class CaptchaFrame extends JFrame {
 	private GridLayout createLayout(){
 		return new GridLayout(4,3);
 	}	
-	
+
 	public void dispose() {
 		frame.dispose();
 	}

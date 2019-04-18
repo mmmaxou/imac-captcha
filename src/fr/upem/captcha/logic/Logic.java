@@ -18,9 +18,8 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import fr.upem.captcha.images.Category;
 import fr.upem.captcha.images.Entry;
-import fr.upem.captcha.images.Images;
+import fr.upem.captcha.images.ImageCategory;
 import fr.upem.captcha.images.miscellaneous.Miscellaneous;
 import fr.upem.captcha.ui.Ui;
 
@@ -28,11 +27,11 @@ public class Logic {
 
 	private List<String> selectedImages = new ArrayList<String>();
 	private List<String> validImages = new ArrayList<String>();
-	private List<Category> used = new ArrayList<Category>();
+	private List<ImageCategory> used = new ArrayList<ImageCategory>();
 	private Entry db = new Entry(); 
 	private int difficulty = 0;
 	final int IMAGE_POOL_SIZE = 9;	
-	private Category category = null;
+	private ImageCategory category = null;
 	private int validUsed = 0;
 
 	public Logic() {
@@ -60,10 +59,10 @@ public class Logic {
 		boolean done = false;
 		while (cpt < 100 && done == false) {
 			cpt++;
-			int l = db.categories().size();
+			int l = db.getCategories().size();
 			int r = ThreadLocalRandom.current().nextInt(l);
-			Category c = db.categories().get(r);
-			if (c.classInstance() instanceof Miscellaneous == false) {
+			ImageCategory c = db.getCategories().get(r);
+			if (c instanceof Miscellaneous == false) {
 				this.category = c;
 				done = true;
 			}
@@ -75,8 +74,7 @@ public class Logic {
 		List<JLabel> jLabels = new ArrayList<JLabel>();
 
 		/// Get the valid images
-		Images imagesClass = category.classInstance();
-		List<File> files = imagesClass.getRandomPhotosURL(amount);
+		List<File> files = this.category.getRandomPhotosFile(amount);
 		validUsed = files.size();
 		for (File file : files) {
 			JLabel jlabel = createLabelImage(file);
@@ -89,13 +87,17 @@ public class Logic {
 		int cpt = 0;
 		while (cpt < 100 && jLabels.size() < IMAGE_POOL_SIZE) {
 			cpt++;
-			int l = db.categories().size();
+			int l = db.getCategories().size();
 			int r = ThreadLocalRandom.current().nextInt(l);
-			Category c = db.categories().get(r);
-			if (c.name().compareTo(this.category.name()) != 0 && this.used.contains(c) == false) {
+			ImageCategory c = db.getCategories().get(r);
+			
+			// Is it the same category than ours ?
+			// Is it already used ?
+			if (c.sameCategory(this.category) == false &&
+				this.used.contains(c) == false) {
+				
 				this.used.add(c);
-				imagesClass = c.classInstance();
-				files = imagesClass.getPhotos();
+				files = this.category.getPhotos();
 				for (File file : files) {
 					if (jLabels.size() < IMAGE_POOL_SIZE) {
 						JLabel jlabel = createLabelImage(file);
@@ -203,7 +205,7 @@ public class Logic {
 	private void reset() {
 		selectedImages = new ArrayList<String>();
 		validImages = new ArrayList<String>();
-		used = new ArrayList<Category>();
+		used = new ArrayList<ImageCategory>();
 		category = null;
 		this.difficulty++;
 		this.start();

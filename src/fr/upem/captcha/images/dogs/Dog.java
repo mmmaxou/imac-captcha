@@ -2,11 +2,10 @@ package fr.upem.captcha.images.dogs;
 
 import java.util.List;
 
-import fr.upem.captcha.images.Category;
 import fr.upem.captcha.images.Database;
-import fr.upem.captcha.images.Images;
+import fr.upem.captcha.images.ImageCategory;
 
-public class Dog extends Images implements Database {
+public class Dog extends ImageCategory implements Database {
 
 	public Dog() {
 		super();
@@ -18,8 +17,13 @@ public class Dog extends Images implements Database {
 	}
 
 	@Override
-	public List<Category> categories() {
+	public List<ImageCategory> _categories() {
 		return null;
+	}
+	
+	@Override
+	public String name() {
+		return "Un Chien";
 	}
 
 }

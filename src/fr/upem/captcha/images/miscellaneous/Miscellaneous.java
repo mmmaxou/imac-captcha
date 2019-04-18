@@ -2,11 +2,9 @@ package fr.upem.captcha.images.miscellaneous;
 
 import java.util.List;
 
-import fr.upem.captcha.images.Category;
-import fr.upem.captcha.images.Database;
-import fr.upem.captcha.images.Images;
+import fr.upem.captcha.images.ImageCategory;
 
-public class Miscellaneous extends Images implements Database {
+public class Miscellaneous extends ImageCategory {
 	public Miscellaneous() {
 		super();
 	}
@@ -15,10 +13,14 @@ public class Miscellaneous extends Images implements Database {
 	public boolean hasCategories() {
 		return false;
 	}
-
+	
 	@Override
-	public List<Category> categories() {
-		return null;
+	public String name() {
+		return "Une créature fantastique";
 	}
 
+	@Override
+	protected List<ImageCategory> _categories() {
+		return null;
+	}
 }
