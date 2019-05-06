@@ -23,7 +23,7 @@ public class Dog extends ImageCategory implements Database {
 	
 	@Override
 	public String name() {
-		return "Un Chien";
+		return "Un chien";
 	}
 
 }

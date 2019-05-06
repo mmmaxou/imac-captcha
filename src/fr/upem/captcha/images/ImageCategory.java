@@ -73,7 +73,7 @@ public abstract class ImageCategory implements Database {
 			for(File f : this.fileList) {
 				allFiles.add(f);
 			}
-			return Collections.unmodifiableList(this.fileList);
+			return Collections.unmodifiableList(allFiles);
 		}
 		else
 		{
