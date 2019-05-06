@@ -87,7 +87,8 @@ public abstract class ImageCategory implements Database {
 	 * @return
 	 */
 	public List<File> getRandomPhotosFile(int amount) {
-		List<File> allFiles = this.getPhotos();
+		List<File> files = this.getPhotos();
+		ArrayList<File> allFiles = new ArrayList<File>(files);
 		Collections.shuffle(allFiles);
 		int sub = Math.min(amount, allFiles.size());
 		return Collections.unmodifiableList(allFiles.subList(0, sub));
@@ -98,7 +99,8 @@ public abstract class ImageCategory implements Database {
 	 * @return
 	 */
 	public File getRandomPhotoFile() {
-		List<File> allFiles = this.getPhotos();
+		List<File> files = this.getPhotos();
+		ArrayList<File> allFiles = new ArrayList<File>(files);
 		Collections.shuffle(allFiles);
 		return allFiles.get(0);
 	};
@@ -183,4 +185,14 @@ public abstract class ImageCategory implements Database {
 	 * @return
 	 */
 	abstract protected List<ImageCategory> _categories();
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return name();
+	}
+	
+	
 }
