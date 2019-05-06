@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.imageio.ImageIO;
@@ -28,8 +29,10 @@ public class Logic {
 	private List<String> selectedImages = new ArrayList<String>();
 	private List<String> validImages = new ArrayList<String>();
 	private List<ImageCategory> used = new ArrayList<ImageCategory>();
-	private Entry db = new Entry(); 
+	private Entry db = new Entry();
+	
 	private int difficulty = 0;
+	private int baseAmount = 0;
 	final int IMAGE_POOL_SIZE = 9;	
 	private ImageCategory category = null;
 	private int validUsed = 0;
@@ -40,6 +43,10 @@ public class Logic {
 
 	private void start() {
 		chooseRandomCategory();
+		
+		System.out.println("Categorie : " + this.category.name());
+		System.out.println("Difficulty : " + this.difficulty);
+		
 		List<JLabel> images = pickRandomImages();
 		Ui.setFrame(images, this.category.name(), verify());
 	}
@@ -50,11 +57,14 @@ public class Logic {
 		} else {
 			final int min = 1;
 			final int max = 4;
-			return (int)( Math.random()*( max - min + 1 ) ) + min + difficulty;
+			return (int)( Math.random()*( max - min + 1 ) ) + min;
 		}
 	}
 
 	private void chooseRandomCategory() {
+		if (this.category != null) {
+			return;
+		}
 		int cpt = 0;
 		boolean done = false;
 		while (cpt < 100 && done == false) {
@@ -70,11 +80,35 @@ public class Logic {
 	}
 
 	private List<JLabel> pickRandomImages() {
-		int amount = amountToRetrieve();
+		int amount = 0;
+		List<File> files;
+		boolean harderCategory = false;
+		if (this.difficulty == 0) {
+			amount = amountToRetrieve();
+			this.baseAmount = amount;
+		} else {
+			harderCategory = Math.random() > 0.5;
+			if (harderCategory) {
+				amount = this.baseAmount;
+				
+				// Change the category to a harder one
+				if (this.category.hasCategories()) {
+			        Random rand = new Random();
+			        List<ImageCategory> categories = this.category.getCategories();
+			        ImageCategory category = categories.get(rand.nextInt(categories.size())); 
+					this.category = category;
+				}
+				
+			} else {
+				amount = this.baseAmount + this.difficulty;
+				amount = amount <= 4 ? amount : 4;
+			}			
+		}
+
+		files = this.category.getRandomPhotosFile(amount);	
 		List<JLabel> jLabels = new ArrayList<JLabel>();
 
 		/// Get the valid images
-		List<File> files = this.category.getRandomPhotosFile(amount);
 		validUsed = files.size();
 		for (File file : files) {
 			JLabel jlabel = createLabelImage(file);
@@ -82,6 +116,8 @@ public class Logic {
 			this.validImages.add(file.getName());
 			System.out.println("[Valid]" + file);
 		}
+		
+		
 
 		/// Fill the images
 		int cpt = 0;
@@ -91,13 +127,15 @@ public class Logic {
 			int r = ThreadLocalRandom.current().nextInt(l);
 			ImageCategory c = db.getCategories().get(r);
 			
+			System.out.println("Random category : " + c.name());
+			
 			// Is it the same category than ours ?
 			// Is it already used ?
 			if (c.sameCategory(this.category) == false &&
 				this.used.contains(c) == false) {
 				
 				this.used.add(c);
-				files = this.category.getPhotos();
+				files = c.getPhotos();
 				for (File file : files) {
 					if (jLabels.size() < IMAGE_POOL_SIZE) {
 						JLabel jlabel = createLabelImage(file);
@@ -206,7 +244,6 @@ public class Logic {
 		selectedImages = new ArrayList<String>();
 		validImages = new ArrayList<String>();
 		used = new ArrayList<ImageCategory>();
-		category = null;
 		this.difficulty++;
 		this.start();
 	}
