@@ -54,16 +54,16 @@ public class CaptchaFrame extends JFrame {
 	}
 
 	private void addImageTypeIndicator() {
-		JTextArea textArea = new JTextArea("Sélectionner les images qui contiennent ce type d'éléments: " + type);
+		JTextArea textArea = new JTextArea("Cliquez sur les images qui contiennent " + type);
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
-		Font font = new Font("Lato", Font.BOLD, 18);
+		Font font = new Font("Arial", Font.BOLD, 18);
 		textArea.setFont(font);
 		frame.add(textArea);
 	}
 
 	private JButton createOkButton(){
-		return new JButton(new AbstractAction("Vérifier") { //ajouter l'action du boutons
+		return new JButton(new AbstractAction("Valider") { //ajouter l'action du boutons
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
