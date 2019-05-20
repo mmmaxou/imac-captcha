@@ -1,9 +1,12 @@
 package fr.upem.captcha.images.dogs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.upem.captcha.images.Database;
 import fr.upem.captcha.images.ImageCategory;
+import fr.upem.captcha.images.dogs.black.BlackDog;
+import fr.upem.captcha.images.dogs.white.WhiteDog;
 
 public class Dog extends ImageCategory implements Database {
 
@@ -13,12 +16,15 @@ public class Dog extends ImageCategory implements Database {
 
 	@Override
 	public boolean hasCategories() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public List<ImageCategory> _categories() {
-		return null;
+		ArrayList<ImageCategory> a = new ArrayList<ImageCategory>();
+		a.add(new BlackDog());
+		a.add(new WhiteDog());
+		return a;
 	}
 	
 	@Override
