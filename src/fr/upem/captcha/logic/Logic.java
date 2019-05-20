@@ -58,6 +58,7 @@ public class Logic {
 			final int min = 1;
 			final int max = 4;
 			return (int)( Math.random()*( max - min + 1 ) ) + min;
+			
 		}
 	}
 
