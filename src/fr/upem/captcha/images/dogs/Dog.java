@@ -44,4 +44,14 @@ public class Dog extends Images implements Database {
 		return "Un chien";
 	}
 
+	@Override
+	protected List<String> getFileNamelist() {
+		ArrayList<String> s = new ArrayList<String>();
+		s.add("dog-001.jpg");
+		s.add("dog-002.jpg");
+		s.add("dog-003.jpg");
+		s.add("dog-004.jpg");
+		return s;
+	}
+
 }

@@ -4,6 +4,7 @@
  */
 package fr.upem.captcha.images.cats.grey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.upem.captcha.images.Images;
@@ -34,5 +35,15 @@ public class GreyCat extends Images {
 	@Override
 	protected List<Images> _categories() {
 		return null;
+	}
+
+	@Override
+	protected List<String> getFileNamelist() {
+		ArrayList<String> s = new ArrayList<String>();
+		s.add("cat-006.jpg");
+		s.add("cat-007.jpg");
+		s.add("cat-008.jpg");
+		s.add("cat-009.jpg");
+		return s;
 	}
 }

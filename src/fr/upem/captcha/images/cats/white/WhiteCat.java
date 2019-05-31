@@ -4,6 +4,7 @@
  */
 package fr.upem.captcha.images.cats.white;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.upem.captcha.images.Images;
@@ -34,6 +35,16 @@ public class WhiteCat extends Images {
 	@Override
 	protected List<Images> _categories() {
 		return null;
+	}
+
+	@Override
+	protected List<String> getFileNamelist() {
+		ArrayList<String> s = new ArrayList<String>();
+		s.add("cat-000.jpg");
+		s.add("cat-010.jpg");
+		s.add("cat-011.jpg");
+		s.add("cat-012.jpg");
+		return s;
 	}
 	
 }
