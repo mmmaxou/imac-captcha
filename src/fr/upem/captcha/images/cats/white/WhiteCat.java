@@ -43,7 +43,7 @@ public class WhiteCat extends Images {
 		s.add("cat-000.jpg");
 		s.add("cat-010.jpg");
 		s.add("cat-011.jpg");
-		s.add("cat-012.jpg");
+		s.add("cat-012.jpeg");
 		return s;
 	}
 	

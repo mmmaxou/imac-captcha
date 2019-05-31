@@ -7,9 +7,11 @@ package fr.upem.captcha.images;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.io.File;
-import java.io.FilenameFilter;
-import java.net.URL;
+
+import javax.imageio.ImageIO;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * abstract Images
@@ -24,7 +26,7 @@ public abstract class Images implements Database {
 	/**
 	 * Contains the files to be displayed
 	 */
-	private ArrayList<File> fileList;
+	private ArrayList<BufferedImage> bufferedImageList;
 	/**
 	 * Contains the sub categories
 	 */
@@ -36,19 +38,9 @@ public abstract class Images implements Database {
 	 * Constructor
 	 */
 	protected Images() {
-		this.fileList = new ArrayList<File>();
+		this.bufferedImageList = new ArrayList<BufferedImage>();
 		this.addAllFiles();
 		this.categories = this._categories();
-	}
-
-	/**
-	 * @return Return a File that represent the current System Directory
-	 */
-	private File getCurrentClassDir() {
-		String className = this.getClass().getSimpleName() + ".class";
-		URL url = this.getClass().getResource(className);
-		String uri = url.getFile().replace("/" + className, "");
-		return new File(uri);
 	}
 
 	/**
@@ -57,6 +49,16 @@ public abstract class Images implements Database {
 	private void addAllFiles() {
 		// JAR DEBUG
 		for (String filename : getFileNamelist()) {
+			
+			try {
+				BufferedImage img = ImageIO.read(getClass().getResourceAsStream(filename));
+				System.out.println("Image : " + img.hashCode());
+				bufferedImageList.add(img);
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.err.println("Image not found :" + filename);
+			}
+			/*
 			URL res = getClass().getResource(filename);
 			if (res != null) {
 				System.out.println("RES : " + res);
@@ -68,7 +70,7 @@ public abstract class Images implements Database {
 			} else {
 				System.err.println("Error retrieving file : " + filename + " | Res : " + res);
 			}
-			
+			*/
 		}
 
 		// OLD
@@ -97,25 +99,25 @@ public abstract class Images implements Database {
 	/**
 	 * @return Return a list with all the photos in store
 	 */
-	public List<File> getPhotos() {
+	public List<BufferedImage> getPhotos() {
 		if (this.hasCategories()) {
-			List<File> allFiles = new ArrayList<File>();
+			List<BufferedImage> allFiles = new ArrayList<BufferedImage>();
 			// System.out.println("Sub categories : ");
 			// System.out.println(this.categories);
 			for(Images imageCategory : this.categories) {
-				for(File f : imageCategory.getPhotos()) {
+				for(BufferedImage f : imageCategory.getPhotos()) {
 					// System.out.println("File : " + f);
 					allFiles.add(f);
 				}				
 			}
-			for(File f : this.fileList) {
+			for(BufferedImage f : this.bufferedImageList) {
 				allFiles.add(f);
 			}
 			return Collections.unmodifiableList(allFiles);
 		}
 		else
 		{
-			return Collections.unmodifiableList(this.fileList);		
+			return Collections.unmodifiableList(this.bufferedImageList);		
 		}
 	};
 
@@ -123,9 +125,9 @@ public abstract class Images implements Database {
 	 * @param amount The amount of images to get
 	 * @return Return a list of random photos of the size given by @param amount
 	 */
-	public List<File> getRandomPhotosFile(int amount) {
-		List<File> files = this.getPhotos();
-		ArrayList<File> allFiles = new ArrayList<File>(files);
+	public List<BufferedImage> getRandomPhotosFile(int amount) {
+		List<BufferedImage> files = this.getPhotos();
+		ArrayList<BufferedImage> allFiles = new ArrayList<BufferedImage>(files);
 		Collections.shuffle(allFiles);
 		int sub = Math.min(amount, allFiles.size());
 		return Collections.unmodifiableList(allFiles.subList(0, sub));
@@ -134,9 +136,9 @@ public abstract class Images implements Database {
 	/**
 	 * @return Return a random image from this category
 	 */
-	public File getRandomPhotoFile() {
-		List<File> files = this.getPhotos();
-		ArrayList<File> allFiles = new ArrayList<File>(files);
+	public BufferedImage getRandomPhotoFile() {
+		List<BufferedImage> files = this.getPhotos();
+		ArrayList<BufferedImage> allFiles = new ArrayList<BufferedImage>(files);
 		Collections.shuffle(allFiles);
 		return allFiles.get(0);
 	};

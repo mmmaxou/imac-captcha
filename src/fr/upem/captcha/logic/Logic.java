@@ -11,15 +11,12 @@ import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -32,7 +29,7 @@ import fr.upem.captcha.ui.Ui;
 
 /**
  * 
- * @class Logic
+ * Logic
  * Handle the basic logic of the program
  * Start the creation of the frame, pick images and display them.
  * After the user selected images, verify and process the choice
@@ -116,7 +113,7 @@ public class Logic {
 	/**
 	 * Utility function to choose a random amount of images
 	 * if the choice were already made ( ie: it's the 2nd try ) simply increment the amount of valid used and return it
-	 * @return
+	 * @return The amount randomly chosen
 	 */
 	private int amountToRetrieve() {
 		if ( validUsed != 0) {
@@ -157,11 +154,11 @@ public class Logic {
 	 * - Pick a small amount of images from the main category choosen
 	 * - Pick images to fill the JFrame up to ${IMAGE_POOL_SIZE} images
 	 * To pick random images, it first choose a random category that is not the main, then pick random images, up to the amount to be retrieved ( ${} ) 
-	 * @return
+	 * @return List of random images picked
 	 */
 	private List<JLabel> pickRandomImages() {
 		int amount = 0;
-		List<File> files;
+		List<BufferedImage> files;
 		boolean harderCategory = false;
 				
 		if (this.difficulty == 0) {
@@ -197,11 +194,11 @@ public class Logic {
 		List<JLabel> jLabels = new ArrayList<JLabel>();
 		validUsed = files.size();
 		
-		for (File file : files) {
+		for (BufferedImage file : files) {
 			JLabel jlabel = createLabelImage(file);
 			jLabels.add(jlabel);
-			this.validImages.add(file.getName());
-			System.out.println("[Valid]" + file);
+			this.validImages.add(String.valueOf(file.hashCode()));
+			System.out.println("[Valid]" + file.hashCode());
 		}
 		
 		
@@ -224,11 +221,11 @@ public class Logic {
 				System.out.println("Okay, lets use this category : " + c.name());
 				this.used.add(c);
 				files = c.getPhotos();
-				for (File file : files) {
+				for (BufferedImage file : files) {
 					if (jLabels.size() < IMAGE_POOL_SIZE) {
 						JLabel jlabel = createLabelImage(file);
 						jLabels.add(jlabel);
-						System.out.println("[Filler]" + file);
+						System.out.println("[Filler]" + file.hashCode());
 					}
 				}
 			}
@@ -242,20 +239,10 @@ public class Logic {
 	/**
 	 * Utility function to create a JLabel from a file
 	 * 
-	 * @param file
-	 * @return
+	 * @param img A buffered Image to display
+	 * @return The JLabel ready to be displayed
 	 */
-	private JLabel createLabelImage(final File file){
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(file); //lire l'image
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		if (img == null) {
-			System.err.println("Image not found :");
-			System.err.println(file);
-		}
+	private JLabel createLabelImage(final BufferedImage img){
 		Image sImage = img.getScaledInstance(1024/3,768/4, Image.SCALE_SMOOTH); //redimentionner l'image
 
 		final JLabel label = new JLabel(new ImageIcon(sImage)); // créer le composant pour ajouter l'image dans la fenêtre
@@ -272,12 +259,12 @@ public class Logic {
 						if(!isSelected){
 							label.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 							isSelected = true;
-							selectedImages.add(file.getName());
+							selectedImages.add(String.valueOf(img.hashCode()));
 						}
 						else {
 							label.setBorder(BorderFactory.createEmptyBorder());
 							isSelected = false;
-							selectedImages.remove(file.getName());
+							selectedImages.remove(String.valueOf(img.hashCode()));
 						}
 
 					}
@@ -300,7 +287,7 @@ public class Logic {
 	/**
 	 * Runnable that return the verification callback
 	 * Either display the success dialog or the error dialog and reset
-	 * @return
+	 * @return The runnable
 	 */
 	private Runnable verify() {
 		return new Runnable() { // faire des choses dans l'interface donc appeler cela dans la queue des évènements
@@ -320,8 +307,7 @@ public class Logic {
 	 * Does the verification
 	 * Sort the selected images and the valid images
 	 * Then compare each entry of the array to check if they contain the same images
-	 * return the result of the comparaison
-	 * @return
+	 * @return the result of the comparison ( true or false )
 	 */
 	private boolean isSelectionValid() {
 		System.out.println(this.selectedImages);

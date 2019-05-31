@@ -42,14 +42,13 @@ public class Miscellaneous extends Images {
 		s.add("bunny-001.jpg");
 		s.add("bunny-002.jpg");
 		s.add("otter-001.jpg");
-		s.add("otter-002.jpg");
 		s.add("phoque-001.jpg");
 		s.add("phoque-002.jpg");
 		s.add("squirrel-001.jpg");
 		s.add("squirrel-002.jpg");
 		s.add("drake-001.jpg");
 		s.add("hypogriffe-001.jpg");
-		s.add("troll-001.jpg");
+		s.add("troll-001.png");
 		s.add("unicorn-001.jpg");
 		s.add("yokai-001.jpg");
 		return s;
