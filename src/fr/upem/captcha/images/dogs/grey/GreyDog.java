@@ -4,6 +4,7 @@
  */
 package fr.upem.captcha.images.dogs.grey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.upem.captcha.images.Images;
@@ -33,4 +34,13 @@ public class GreyDog extends Images {
 		return null;
 	}
 
+	@Override
+	protected List<String> getFileNamelist() {
+		ArrayList<String> s = new ArrayList<String>();
+		s.add("dog-014.jpg");
+		s.add("dog-015.jpg");
+		s.add("dog-016.jpg");
+		s.add("dog-017.jpg");
+		return s;
+	}
 }
