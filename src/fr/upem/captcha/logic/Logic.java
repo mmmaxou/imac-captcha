@@ -26,6 +26,7 @@ import javax.swing.JLabel;
 
 import fr.upem.captcha.images.Entry;
 import fr.upem.captcha.images.Images;
+import fr.upem.captcha.images.dogs.Dog;
 import fr.upem.captcha.images.miscellaneous.Miscellaneous;
 import fr.upem.captcha.ui.Ui;
 
@@ -144,7 +145,7 @@ public class Logic {
 			int l = db.getCategories().size();
 			int r = ThreadLocalRandom.current().nextInt(l);
 			Images c = db.getCategories().get(r);
-			if (c instanceof Miscellaneous == false) {
+			if (c instanceof Miscellaneous == false || c instanceof Dog) {
 				this.category = c;
 				done = true;
 			}

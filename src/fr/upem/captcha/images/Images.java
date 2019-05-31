@@ -18,9 +18,9 @@ import java.net.URL;
  */
 
 public abstract class Images implements Database {
-	
+
 	// ########## Attributes ##########
-	
+
 	/**
 	 * Contains the files to be displayed
 	 */
@@ -29,7 +29,7 @@ public abstract class Images implements Database {
 	 * Contains the sub categories
 	 */
 	private List<Images> categories;
-	
+
 	// ########## Methods ##########	
 
 	/**
@@ -55,6 +55,24 @@ public abstract class Images implements Database {
 	 * Add all images in the System Directory to the fileList
 	 */
 	private void addAllFiles() {
+		// JAR DEBUG
+		for (String filename : getFileNamelist()) {
+			URL res = getClass().getResource(filename);
+			if (res != null) {
+				System.out.println("RES : " + res);
+				File file = new File(res.getPath());
+				System.out.println("FILE : " + file);
+				if (file != null) {
+					fileList.add(file);
+				}
+			} else {
+				System.err.println("Error retrieving file : " + filename + " | Res : " + res);
+			}
+			
+		}
+
+		// OLD
+		/*
 		File curDir = getCurrentClassDir();
 		final String[] EXTENSIONS = new String[]{ "jpeg", "png", "jpg" };
 		final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
@@ -73,6 +91,7 @@ public abstract class Images implements Database {
 				fileList.add(f);
 			}
 		}
+		*/
 	}	
 
 	/**
@@ -171,12 +190,12 @@ public abstract class Images implements Database {
 	public boolean compatibleCategory(Images imageCategory) {
 		return this.getClass().isAssignableFrom( imageCategory.getClass() );
 	}
-	
+
 	/**
 	 * @return The name of the category
 	 */
 	abstract public String name();
-	
+
 	/**
 	 * Return a copy of the sub category
 	 * @return The sub categories
@@ -199,6 +218,11 @@ public abstract class Images implements Database {
 	 * @return The list of sub categories
 	 */
 	abstract protected List<Images> _categories();
+	
+	/**
+	 * @return The listed images
+	 */
+	abstract protected List<String> getFileNamelist();
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -207,6 +231,6 @@ public abstract class Images implements Database {
 	public String toString() {
 		return name();
 	}
-	
-	
+
+
 }

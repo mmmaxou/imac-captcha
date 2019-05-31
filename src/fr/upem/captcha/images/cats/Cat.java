@@ -42,4 +42,14 @@ public class Cat extends Images implements Database  {
 		a.add(new WhiteCat());
 		return a;
 	}
+
+	@Override
+	protected List<String> getFileNamelist() {
+		ArrayList<String> s = new ArrayList<String>();
+		s.add("cat-001.jpg");
+		s.add("cat-002.jpg");
+		s.add("cat-003.jpg");
+		s.add("cat-005.jpg");
+		return s;
+	}
 }
