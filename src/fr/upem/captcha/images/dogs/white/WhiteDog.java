@@ -1,7 +1,6 @@
 /**
- * Author
- * Cécile Rousset
- * Maximilien Pluchard
+ * @author Cécile Rousset
+ * @author Maximilien Pluchard
  */
 package fr.upem.captcha.images.dogs.white;
 
@@ -10,7 +9,7 @@ import java.util.List;
 import fr.upem.captcha.images.Images;
 
 /**
- * @class WhiteDog
+ * WhiteDog
  * Contains the white dog folder
  *
  */

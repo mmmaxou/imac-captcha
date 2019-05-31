@@ -1,7 +1,6 @@
 /**
- * Author
- * Cécile Rousset
- * Maximilien Pluchard
+ * @author Cécile Rousset
+ * @author Maximilien Pluchard
  */
 package fr.upem.captcha.images.dogs.black;
 
@@ -10,7 +9,7 @@ import java.util.List;
 import fr.upem.captcha.images.Images;
 
 /**
- * @class BlackDog
+ * BlackDog
  * Contains the black dog folder
  *
  */

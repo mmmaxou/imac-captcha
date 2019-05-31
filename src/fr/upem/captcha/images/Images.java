@@ -1,7 +1,6 @@
 /**
- * Author
- * Cécile Rousset
- * Maximilien Pluchard
+ * @author Cécile Rousset
+ * @author Maximilien Pluchard
  */
 package fr.upem.captcha.images;
 
@@ -13,8 +12,8 @@ import java.io.FilenameFilter;
 import java.net.URL;
 
 /**
- * @class abstract Images
- * A class that extends Images contains images to display for the captcha
+ * abstract Images
+ * A class that implements Database that contains images to display for the captcha
  * Contains all the logic to retrieve images in a folder
  */
 
@@ -43,8 +42,7 @@ public abstract class Images implements Database {
 	}
 
 	/**
-	 * Return a File that represent the current System Directory
-	 * @return
+	 * @return Return a File that represent the current System Directory
 	 */
 	private File getCurrentClassDir() {
 		String className = this.getClass().getSimpleName() + ".class";
@@ -54,7 +52,7 @@ public abstract class Images implements Database {
 	}
 
 	/**
-	 * Add all images in the System Directory to {@value} fileList
+	 * Add all images in the System Directory to the fileList
 	 */
 	private void addAllFiles() {
 		File curDir = getCurrentClassDir();
@@ -78,8 +76,7 @@ public abstract class Images implements Database {
 	}	
 
 	/**
-	 * Return a list with all the photos in store
-	 * @return
+	 * @return Return a list with all the photos in store
 	 */
 	public List<File> getPhotos() {
 		if (this.hasCategories()) {
@@ -104,9 +101,8 @@ public abstract class Images implements Database {
 	};
 
 	/**
-	 * Return a list of random photos of the size given by @param amount 
-	 * @param amount
-	 * @return
+	 * @param amount The amount of images to get
+	 * @return Return a list of random photos of the size given by @param amount
 	 */
 	public List<File> getRandomPhotosFile(int amount) {
 		List<File> files = this.getPhotos();
@@ -117,8 +113,7 @@ public abstract class Images implements Database {
 	};
 
 	/**
-	 * Return a random image from this category
-	 * @return
+	 * @return Return a random image from this category
 	 */
 	public File getRandomPhotoFile() {
 		List<File> files = this.getPhotos();
@@ -153,41 +148,38 @@ public abstract class Images implements Database {
 	}
 
 	/**
-	 * Return true if the two categories are strictly the same
-	 * @param imageCategory
-	 * @return
+	 * @param imageCategory The category to compare to
+	 * @return Return true if the two categories are strictly the same
 	 */
 	public boolean sameCategory(Images imageCategory) {
 		return this.getClass().equals( imageCategory.getClass());
 	}
 
 	/**
-	 * Return true if the given category is a descendant of this category
-	 * @param imageCategory
-	 * @return
+	 * @param imageCategory The category to compare to
+	 * @return Return true if the given category is a descendant of this category
 	 */
 	public boolean descendantCategory(Images imageCategory) {
 		return !sameCategory(imageCategory) && this.getClass().isAssignableFrom( imageCategory.getClass() );
 	}
 
 	/**
-	 * Return true if the two category are the same, or the given category
+	 * @param imageCategory The category to compare to
+	 * @return Return true if the two category are the same, or the given category
 	 * is a descendant of this category
-	 * @param imageCategory
-	 * @return
 	 */
 	public boolean compatibleCategory(Images imageCategory) {
 		return this.getClass().isAssignableFrom( imageCategory.getClass() );
 	}
 	
 	/**
-	 * @return the name
+	 * @return The name of the category
 	 */
 	abstract public String name();
 	
 	/**
 	 * Return a copy of the sub category
-	 * @return
+	 * @return The sub categories
 	 */
 	public List<Images> getCategories() {
 		if (this.hasCategories()) {
@@ -204,7 +196,7 @@ public abstract class Images implements Database {
 
 	/**
 	 * Create the categories
-	 * @return
+	 * @return The list of sub categories
 	 */
 	abstract protected List<Images> _categories();
 

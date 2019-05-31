@@ -1,8 +1,8 @@
 /**
- * Author
- * Cécile Rousset
- * Maximilien Pluchard
+ * @author Cécile Rousset
+ * @author Maximilien Pluchard
  */
+
 package fr.upem.captcha.images.miscellaneous;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 import fr.upem.captcha.images.Images;
 
 /**
- * @class Miscellaneous
+ * Miscellaneous
  * Contains the miscellaneous folder
  * Can't be picked as the right image
  *

@@ -1,7 +1,6 @@
 /**
- * Author
- * Cécile Rousset
- * Maximilien Pluchard
+ * @author Cécile Rousset
+ * @author Maximilien Pluchard
  */
 package fr.upem.captcha.images;
 
@@ -14,7 +13,7 @@ import fr.upem.captcha.images.dogs.Dog;
 import fr.upem.captcha.images.miscellaneous.Miscellaneous;
 
 /**
- * @class Entry
+ * Entry
  * Entry point of the images database
  * Contains no image
  * Contains all sub categories

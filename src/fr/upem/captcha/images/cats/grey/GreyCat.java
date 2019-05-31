@@ -1,7 +1,6 @@
 /**
- * Author
- * Cécile Rousset
- * Maximilien Pluchard
+ * @author Cécile Rousset
+ * @author Maximilien Pluchard
  */
 package fr.upem.captcha.images.cats.grey;
 
@@ -11,7 +10,7 @@ import fr.upem.captcha.images.Images;
 
 /**
  * 
- * @class GreyCat
+ * GreyCat
  * Contains the grey cat folder
  *
  */

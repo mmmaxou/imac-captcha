@@ -1,13 +1,12 @@
 /**
- * Author
- * Cécile Rousset
- * Maximilien Pluchard
+ * @author Cécile Rousset
+ * @author Maximilien Pluchard
  */
 package fr.upem.captcha.images;
 
 import java.util.List;
 /**
- * @interface Database
+ * Database
  * A database is an entity that can contain sub categories
  */
 public interface Database {

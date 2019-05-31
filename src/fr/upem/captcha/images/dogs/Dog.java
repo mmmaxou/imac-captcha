@@ -1,7 +1,6 @@
 /**
- * Author
- * Cécile Rousset
- * Maximilien Pluchard
+ * @author Cécile Rousset
+ * @author Maximilien Pluchard
  */
 package fr.upem.captcha.images.dogs;
 
@@ -15,7 +14,7 @@ import fr.upem.captcha.images.dogs.grey.GreyDog;
 import fr.upem.captcha.images.dogs.white.WhiteDog;
 
 /**
- * @class Dog
+ * Dog
  * Contains the dog folder
  *
  */

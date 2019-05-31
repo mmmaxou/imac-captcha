@@ -1,7 +1,6 @@
 /**
- * Author
- * Cécile Rousset
- * Maximilien Pluchard
+ * @author Cécile Rousset
+ * @author Maximilien Pluchard
  */
 package fr.upem.captcha;
 
@@ -10,7 +9,7 @@ import java.io.IOException;
 import fr.upem.captcha.logic.Logic;
 
 /**
- * @class Main
+ * Main
  * Entry point of the program
  */
 public class Main {	
