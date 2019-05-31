@@ -1,9 +1,21 @@
+/**
+ * Author
+ * Cécile Rousset
+ * Maximilien Pluchard
+ */
 package fr.upem.captcha.images.cats.black;
 
 import java.util.List;
-import fr.upem.captcha.images.ImageCategory;
+import fr.upem.captcha.images.Images;
 
-public class BlackCat extends ImageCategory {
+/**
+ * 
+ * @class BlackCat
+ * Contains the black cat folder
+ *
+ */
+
+public class BlackCat extends Images {
 	
 	public BlackCat() {
 		super();
@@ -20,7 +32,7 @@ public class BlackCat extends ImageCategory {
 	}
 
 	@Override
-	protected List<ImageCategory> _categories() {
+	protected List<Images> _categories() {
 		return null;
 	}
 }

@@ -1,10 +1,21 @@
+/**
+ * Author
+ * Cécile Rousset
+ * Maximilien Pluchard
+ */
 package fr.upem.captcha.images.dogs.black;
 
 import java.util.List;
 
-import fr.upem.captcha.images.ImageCategory;
+import fr.upem.captcha.images.Images;
 
-public class BlackDog extends ImageCategory {
+/**
+ * @class BlackDog
+ * Contains the black dog folder
+ *
+ */
+
+public class BlackDog extends Images {
 	
 	public BlackDog() {
 		super();
@@ -21,7 +32,7 @@ public class BlackDog extends ImageCategory {
 	}
 
 	@Override
-	protected List<ImageCategory> _categories() {
+	protected List<Images> _categories() {
 		return null;
 	}
 

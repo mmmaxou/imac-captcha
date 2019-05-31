@@ -1,3 +1,8 @@
+/**
+ * Author
+ * Cécile Rousset
+ * Maximilien Pluchard
+ */
 package fr.upem.captcha.logic;
 
 import java.awt.Color;
@@ -20,37 +25,98 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import fr.upem.captcha.images.Entry;
-import fr.upem.captcha.images.ImageCategory;
+import fr.upem.captcha.images.Images;
 import fr.upem.captcha.images.miscellaneous.Miscellaneous;
 import fr.upem.captcha.ui.Ui;
 
+/**
+ * 
+ * @class Logic
+ * Handle the basic logic of the program
+ * Start the creation of the frame, pick images and display them.
+ * After the user selected images, verify and process the choice
+ *
+ */
+
 public class Logic {
 
+	// ########## Attributes ##########
+	/**
+	 * Contains a list of string of images selected by the user
+	 */
 	private List<String> selectedImages = new ArrayList<String>();
+	
+	/**
+	 * Contains the list of valid images 
+	 */
 	private List<String> validImages = new ArrayList<String>();
-	private List<ImageCategory> used = new ArrayList<ImageCategory>();
+	
+	/**
+	 * Contains the list of categories that were already used
+	 */
+	private List<Images> used = new ArrayList<Images>();
+	
+	/**
+	 * Main Entry point of the database
+	 */
 	private Entry db = new Entry();
 	
+	/**
+	 * Current difficulty
+	 */
 	private int difficulty = 0;
+	
+	/**
+	 * Store the amount randomly chosen.
+	 * We will then get that amount of random images
+	 * Start from 1 to 4
+	 */
 	private int baseAmount = 0;
+	
+	/**
+	 * Static value to store the amount of JFrames to display
+	 */
 	final int IMAGE_POOL_SIZE = 9;	
-	private ImageCategory category = null;
+	
+	/**
+	 * Store the main category chosen
+	 */
+	private Images category = null;
+	
+	/**
+	 * Store the number of valid images used
+	 */
 	private int validUsed = 0;
 
+	// ########## Methods ##########
+	
+	/**
+	 * Main constructor
+	 * Simply lunch start
+	 */
 	public Logic() {
 		start();
 	}
 
+	/**
+	 * Choose a random category to be used as the main category
+	 * Pick random images and send them to a JFrame
+	 */
 	private void start() {
 		chooseRandomCategory();
 		
-		System.out.println("Categorie : " + this.category.name());
-		System.out.println("Difficulty : " + this.difficulty);
+		System.out.println("Main Category for the captcha : " + this.category.name());
+		System.out.println("Start Difficulty : " + this.difficulty);
 		
 		List<JLabel> images = pickRandomImages();
 		Ui.setFrame(images, this.category.name(), verify());
 	}
 
+	/**
+	 * Utility function to choose a random amount of images
+	 * if the choice were already made ( ie: it's the 2nd try ) simply increment the amount of valid used and return it
+	 * @return
+	 */
 	private int amountToRetrieve() {
 		if ( validUsed != 0) {
 			return validUsed + 1;
@@ -62,6 +128,11 @@ public class Logic {
 		}
 	}
 
+	/**
+	 * Choose a random category
+	 * If the choice were already made ( ie: it's the 2nd try ) does nothing
+	 * List all the categories from the Entry Class and take one randomly that is not Miscellaneous
+	 */
 	private void chooseRandomCategory() {
 		if (this.category != null) {
 			return;
@@ -72,7 +143,7 @@ public class Logic {
 			cpt++;
 			int l = db.getCategories().size();
 			int r = ThreadLocalRandom.current().nextInt(l);
-			ImageCategory c = db.getCategories().get(r);
+			Images c = db.getCategories().get(r);
 			if (c instanceof Miscellaneous == false) {
 				this.category = c;
 				done = true;
@@ -80,14 +151,26 @@ public class Logic {
 		}
 	}
 
+	/**
+	 * Does 2 things :
+	 * - Pick a small amount of images from the main category choosen
+	 * - Pick images to fill the JFrame up to ${IMAGE_POOL_SIZE} images
+	 * To pick random images, it first choose a random category that is not the main, then pick random images, up to the amount to be retrieved ( ${} ) 
+	 * @return
+	 */
 	private List<JLabel> pickRandomImages() {
 		int amount = 0;
 		List<File> files;
 		boolean harderCategory = false;
+				
 		if (this.difficulty == 0) {
+			// If it's the first try
+			// Choose a random baseAmount
 			amount = amountToRetrieve();
 			this.baseAmount = amount;
 		} else {
+			// If it's not the first try
+			// Either take a harder category or take more images from that category
 			harderCategory = Math.random() > 0.5;
 			if (harderCategory) {
 				amount = this.baseAmount;
@@ -95,22 +178,24 @@ public class Logic {
 				// Change the category to a harder one
 				if (this.category.hasCategories()) {
 			        Random rand = new Random();
-			        List<ImageCategory> categories = this.category.getCategories();
-			        ImageCategory category = categories.get(rand.nextInt(categories.size())); 
+			        List<Images> categories = this.category.getCategories();
+			        Images category = categories.get(rand.nextInt(categories.size())); 
 					this.category = category;
 				}
 				
 			} else {
+				
+				// Take more images from that category
 				amount = this.baseAmount + this.difficulty;
 				amount = amount <= 4 ? amount : 4;
 			}			
 		}
 
+		/// Get the valid images		
 		files = this.category.getRandomPhotosFile(amount);	
 		List<JLabel> jLabels = new ArrayList<JLabel>();
-
-		/// Get the valid images
 		validUsed = files.size();
+		
 		for (File file : files) {
 			JLabel jlabel = createLabelImage(file);
 			jLabels.add(jlabel);
@@ -126,15 +211,16 @@ public class Logic {
 			cpt++;
 			int l = db.getCategories().size();
 			int r = ThreadLocalRandom.current().nextInt(l);
-			ImageCategory c = db.getCategories().get(r);
+			Images c = db.getCategories().get(r);
 			
 			System.out.println("Random category : " + c.name());
 			
 			// Is it the same category than ours ?
 			// Is it already used ?
-			if (c.sameCategory(this.category) == false &&
+			if (c.compatibleCategory(this.category) == false &&
 				this.used.contains(c) == false) {
 				
+				System.out.println("Okay, lets use this category : " + c.name());
 				this.used.add(c);
 				files = c.getPhotos();
 				for (File file : files) {
@@ -146,10 +232,18 @@ public class Logic {
 				}
 			}
 		}
+		
+		// Return all images
 		Collections.shuffle(jLabels);
 		return jLabels;
 	}
 
+	/**
+	 * Utility function to create a JLabel from a file
+	 * 
+	 * @param file
+	 * @return
+	 */
 	private JLabel createLabelImage(final File file){
 		BufferedImage img = null;
 		try {
@@ -202,6 +296,11 @@ public class Logic {
 		return label;
 	}
 
+	/**
+	 * Runnable that return the verification callback
+	 * Either display the success dialog or the error dialog and reset
+	 * @return
+	 */
 	private Runnable verify() {
 		return new Runnable() { // faire des choses dans l'interface donc appeler cela dans la queue des évènements
 			@Override
@@ -216,6 +315,13 @@ public class Logic {
 		};
 	}
 
+	/**
+	 * Does the verification
+	 * Sort the selected images and the valid images
+	 * Then compare each entry of the array to check if they contain the same images
+	 * return the result of the comparaison
+	 * @return
+	 */
 	private boolean isSelectionValid() {
 		System.out.println(this.selectedImages);
 		System.out.println(this.validImages);
@@ -244,7 +350,7 @@ public class Logic {
 	private void reset() {
 		selectedImages = new ArrayList<String>();
 		validImages = new ArrayList<String>();
-		used = new ArrayList<ImageCategory>();
+		used = new ArrayList<Images>();
 		this.difficulty++;
 		this.start();
 	}

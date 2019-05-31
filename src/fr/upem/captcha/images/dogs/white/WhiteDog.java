@@ -1,10 +1,21 @@
+/**
+ * Author
+ * Cécile Rousset
+ * Maximilien Pluchard
+ */
 package fr.upem.captcha.images.dogs.white;
 
 import java.util.List;
 
-import fr.upem.captcha.images.ImageCategory;
+import fr.upem.captcha.images.Images;
 
-public class WhiteDog extends ImageCategory {
+/**
+ * @class WhiteDog
+ * Contains the white dog folder
+ *
+ */
+
+public class WhiteDog extends Images {
 	
 	public WhiteDog() {
 		super();
@@ -21,7 +32,7 @@ public class WhiteDog extends ImageCategory {
 	}
 
 	@Override
-	protected List<ImageCategory> _categories() {
+	protected List<Images> _categories() {
 		return null;
 	}
 	

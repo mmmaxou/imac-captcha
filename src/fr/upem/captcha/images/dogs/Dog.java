@@ -1,14 +1,26 @@
+/**
+ * Author
+ * Cécile Rousset
+ * Maximilien Pluchard
+ */
 package fr.upem.captcha.images.dogs;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.upem.captcha.images.Database;
-import fr.upem.captcha.images.ImageCategory;
+import fr.upem.captcha.images.Images;
 import fr.upem.captcha.images.dogs.black.BlackDog;
+import fr.upem.captcha.images.dogs.grey.GreyDog;
 import fr.upem.captcha.images.dogs.white.WhiteDog;
 
-public class Dog extends ImageCategory implements Database {
+/**
+ * @class Dog
+ * Contains the dog folder
+ *
+ */
+
+public class Dog extends Images implements Database {
 
 	public Dog() {
 		super();
@@ -20,10 +32,11 @@ public class Dog extends ImageCategory implements Database {
 	}
 
 	@Override
-	public List<ImageCategory> _categories() {
-		ArrayList<ImageCategory> a = new ArrayList<ImageCategory>();
+	public List<Images> _categories() {
+		ArrayList<Images> a = new ArrayList<Images>();
 		a.add(new BlackDog());
 		a.add(new WhiteDog());
+		a.add(new GreyDog());
 		return a;
 	}
 	

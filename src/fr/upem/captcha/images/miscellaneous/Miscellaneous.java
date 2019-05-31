@@ -1,10 +1,21 @@
+/**
+ * Author
+ * Cécile Rousset
+ * Maximilien Pluchard
+ */
 package fr.upem.captcha.images.miscellaneous;
 
 import java.util.List;
 
-import fr.upem.captcha.images.ImageCategory;
+import fr.upem.captcha.images.Images;
 
-public class Miscellaneous extends ImageCategory {
+/**
+ * @class Miscellaneous
+ * Contains the miscellaneous folder
+ * Can't be picked as the right image
+ *
+ */
+public class Miscellaneous extends Images {
 	public Miscellaneous() {
 		super();
 	}
@@ -16,11 +27,11 @@ public class Miscellaneous extends ImageCategory {
 	
 	@Override
 	public String name() {
-		return "Une créature fantastique";
+		return "Une créature";
 	}
 
 	@Override
-	protected List<ImageCategory> _categories() {
+	protected List<Images> _categories() {
 		return null;
 	}
 }

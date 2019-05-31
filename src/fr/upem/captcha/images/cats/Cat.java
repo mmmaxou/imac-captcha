@@ -1,14 +1,26 @@
+/**
+ * Author
+ * Cécile Rousset
+ * Maximilien Pluchard
+ */
 package fr.upem.captcha.images.cats;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.upem.captcha.images.Database;
-import fr.upem.captcha.images.ImageCategory;
+import fr.upem.captcha.images.Images;
+import fr.upem.captcha.images.cats.black.BlackCat;
 import fr.upem.captcha.images.cats.grey.GreyCat;
 import fr.upem.captcha.images.cats.white.WhiteCat;
 
-public class Cat extends ImageCategory implements Database  {	
+/**
+ * 
+ * @class Cat
+ * Contains the cat folder
+ *
+ */
+public class Cat extends Images implements Database  {	
 	public Cat() {
 		super();
 	}
@@ -24,8 +36,9 @@ public class Cat extends ImageCategory implements Database  {
 	}
 
 	@Override
-	protected List<ImageCategory> _categories() {
-		ArrayList<ImageCategory> a = new ArrayList<ImageCategory>();
+	protected List<Images> _categories() {
+		ArrayList<Images> a = new ArrayList<Images>();
+		a.add(new BlackCat());
 		a.add(new GreyCat());
 		a.add(new WhiteCat());
 		return a;

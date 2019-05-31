@@ -1,3 +1,8 @@
+/**
+ * Author
+ * Cécile Rousset
+ * Maximilien Pluchard
+ */
 package fr.upem.captcha.images;
 
 import java.util.List;
@@ -8,8 +13,16 @@ import fr.upem.captcha.images.cats.Cat;
 import fr.upem.captcha.images.dogs.Dog;
 import fr.upem.captcha.images.miscellaneous.Miscellaneous;
 
+/**
+ * @class Entry
+ * Entry point of the images database
+ * Contains no image
+ * Contains all sub categories
+ *
+ */
+
 public class Entry implements Database {
-	public List<ImageCategory> categories = new ArrayList<ImageCategory>();
+	public List<Images> categories = new ArrayList<Images>();
 	
 	public Entry() {
 		categories.add(new Cat());
@@ -23,7 +36,7 @@ public class Entry implements Database {
 	}
 
 	@Override
-	public List<ImageCategory> getCategories() {
+	public List<Images> getCategories() {
 		return Collections.unmodifiableList(this.categories);
 	}
 	

@@ -1,10 +1,22 @@
+/**
+ * Author
+ * Cécile Rousset
+ * Maximilien Pluchard
+ */
 package fr.upem.captcha.images.cats.grey;
 
 import java.util.List;
 
-import fr.upem.captcha.images.ImageCategory;
+import fr.upem.captcha.images.Images;
 
-public class GreyCat extends ImageCategory {
+/**
+ * 
+ * @class GreyCat
+ * Contains the grey cat folder
+ *
+ */
+
+public class GreyCat extends Images {
 	
 	public GreyCat() {
 		super();
@@ -21,7 +33,7 @@ public class GreyCat extends ImageCategory {
 	}
 
 	@Override
-	protected List<ImageCategory> _categories() {
+	protected List<Images> _categories() {
 		return null;
 	}
 }

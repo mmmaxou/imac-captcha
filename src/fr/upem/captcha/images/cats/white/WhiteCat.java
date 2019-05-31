@@ -1,10 +1,22 @@
+/**
+ * Author
+ * Cécile Rousset
+ * Maximilien Pluchard
+ */
 package fr.upem.captcha.images.cats.white;
 
 import java.util.List;
 
-import fr.upem.captcha.images.ImageCategory;
+import fr.upem.captcha.images.Images;
 
-public class WhiteCat extends ImageCategory {
+/**
+ * 
+ * @class WhiteCat
+ * Contains the white cat folder
+ *
+ */
+
+public class WhiteCat extends Images {
 	
 	public WhiteCat() {
 		super();
@@ -21,7 +33,7 @@ public class WhiteCat extends ImageCategory {
 	}
 
 	@Override
-	protected List<ImageCategory> _categories() {
+	protected List<Images> _categories() {
 		return null;
 	}
 	
